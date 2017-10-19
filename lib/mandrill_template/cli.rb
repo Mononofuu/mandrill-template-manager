@@ -43,7 +43,7 @@ class MandrillTemplateManager < Thor
     end
   end
   
- desc "upload ALL", "upload all template to remote as draft."
+ desc "upload_all", "upload all template to remote as draft."
   option :publish, type: :boolean, default: false, aliases: :p
   def upload_all()
     labels = Dir.glob("#{ templates_directory }/*").map {|path| path.split(File::SEPARATOR).last}
