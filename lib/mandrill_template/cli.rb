@@ -5,12 +5,14 @@ require 'formatador'
 require 'unicode' unless ['jruby'].include?(RbConfig::CONFIG['ruby_install_name'])
 require 'yaml'
 require "mandrill_template/monkey_create_file"
+require 'IMGKit'
 autoload "Handlebars", 'handlebars'
 
 class MandrillTemplateManager < Thor
   include Thor::Actions
   VERSION = "0.3.0"
   APP_ENVS = { 'dev' => "dev-", 'qa' => "qa-", 'prod' => "" }
+  REPORT_DIR = 'reports'
   class_option :env, :enum => %w{dev qa prod}, :banner => "<dev|qa|prod>", :desc => "Enables environment support by adding prefixes.", default: "prod"
 
   desc "export_all", "export all templates from remote to local files (does not include non-prod templates)."
@@ -109,6 +111,22 @@ class MandrillTemplateManager < Thor
       end
     else
       puts "Template data not found #{slug}. Please generate first."
+    end
+  end
+
+  desc "report", "generate report for all local templates"
+  def report()
+    empty_directory REPORT_DIR
+    labels = Dir.glob("#{ templates_directory }/*").map {|path| path.split(File::SEPARATOR).last}
+    labels.each do |slug|
+      template = MandrillTemplate::Local.new(slug)
+      if template.avail
+        kit = IMGKit.new(template['code'], :quality => 60, width: 600)
+        file = kit.to_file(REPORT_DIR + "/#{slug}.png")
+        puts "Template '#{slug}' added to report."
+      else
+        puts "Template data not found for '#{slug}'."
+      end
     end
   end
 
