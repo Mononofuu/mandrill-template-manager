@@ -29,6 +29,7 @@ Commands:
   mandrilltemplate list                       # show template list both of remote and local.
   mandrilltemplate publish SLUG               # publish template from draft.
   mandrilltemplate render SLUG [PARAMS_FILE]  # render mailbody from local template data. File should be Array. see https://mandrillapp.com/api/docs/templates.JSON.html#method=render.
+  mandrilltemplate report                     # generate report for all local templates
   mandrilltemplate upload_all                 # upload all templates to remote as draft.
   mandrilltemplate upload SLUG                # upload template to remote as draft.
 
@@ -185,6 +186,16 @@ $ mandrilltemplate upload --env=qa SLUG
 ```
 $ mandrilltemplate publish --env=qa SLUG
 ```
+
+## Report generation
+
+HTML report containing preview for all local templates and metadata can be generated using following command:
+
+```
+$ mandrilltemplate report
+```
+
+Result written to `report/report.html` file.
 
 ## Optional: render supports Handlebars preview.
 

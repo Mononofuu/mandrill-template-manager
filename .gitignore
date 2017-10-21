@@ -51,3 +51,4 @@ Session.vim
 /templates/
 /Gemfile.lock
 /report
+/.DS_Store

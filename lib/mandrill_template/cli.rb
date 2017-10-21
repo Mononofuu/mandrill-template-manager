@@ -6,13 +6,14 @@ require 'unicode' unless ['jruby'].include?(RbConfig::CONFIG['ruby_install_name'
 require 'yaml'
 require "mandrill_template/monkey_create_file"
 require 'IMGKit'
+require 'erb'
 autoload "Handlebars", 'handlebars'
 
 class MandrillTemplateManager < Thor
   include Thor::Actions
   VERSION = "0.3.0"
   APP_ENVS = { 'dev' => "dev-", 'qa' => "qa-", 'prod' => "" }
-  REPORT_DIR = 'reports'
+  REPORT_DIR = 'report'
   class_option :env, :enum => %w{dev qa prod}, :banner => "<dev|qa|prod>", :desc => "Enables environment support by adding prefixes.", default: "prod"
 
   desc "export_all", "export all templates from remote to local files (does not include non-prod templates)."
@@ -123,11 +124,22 @@ class MandrillTemplateManager < Thor
       if template.avail
         kit = IMGKit.new(template['code'], :quality => 60, width: 600)
         file = kit.to_file(REPORT_DIR + "/#{slug}.png")
-        puts "Template '#{slug}' added to report."
+        puts "Preview for template '#{slug}' generated."
       else
         puts "Template data not found for '#{slug}'."
       end
     end
+
+    @local_templates = collect_local_templates
+
+    erb_str = File.read('lib/report.html.erb')
+    result = ERB.new(erb_str).result(binding)
+    
+    html_file = REPORT_DIR + '/report.html'
+    File.open(html_file, 'w') do |f|
+      f.write(result)
+    end
+    puts "Report complete."
   end
 
   desc "list [LABEL]", "show template list both of remote and local [optionally filtered by LABEL]."
