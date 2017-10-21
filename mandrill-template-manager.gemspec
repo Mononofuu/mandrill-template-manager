@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "mandrill-template-manager"
-  spec.version       = "0.3.5"
+  spec.version       = "0.3.6"
   spec.authors       = ["sawanoboly"]
   spec.email         = ["sawanoboriyu@higanworks.com"]
 
@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mandrill-api"
   spec.add_dependency "formatador"
   spec.add_dependency "unicode"
+  spec.add_dependency "imgkit"
+  spec.add_dependency "wkhtmltoimage-binary"
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
