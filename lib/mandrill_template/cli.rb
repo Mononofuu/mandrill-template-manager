@@ -5,7 +5,7 @@ require 'formatador'
 require 'unicode' unless ['jruby'].include?(RbConfig::CONFIG['ruby_install_name'])
 require 'yaml'
 require "mandrill_template/monkey_create_file"
-require 'IMGKit'
+require 'imgkit'
 require 'erb'
 autoload "Handlebars", 'handlebars'
 
