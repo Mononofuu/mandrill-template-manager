@@ -127,7 +127,7 @@ class MandrillTemplateManager < Thor
         f = File.open(png_file, 'w')
         file = kit.to_file(png_file)
         f.close
-        puts "Image written '#{file}'."
+        puts "Image written '#{file.size}'."
         puts "Preview for template '#{slug}' generated."
       else
         puts "Template data not found for '#{slug}'."
