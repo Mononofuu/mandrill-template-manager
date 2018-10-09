@@ -128,8 +128,8 @@ class MandrillTemplateManager < Thor
         file = File.open(png_file, 'wb')
         file.write(img)
         file.flush
-        file.close
         puts "Image written '#{file.size}'."
+        file.close
         puts "Preview for template '#{slug}' generated."
       else
         puts "Template data not found for '#{slug}'."
