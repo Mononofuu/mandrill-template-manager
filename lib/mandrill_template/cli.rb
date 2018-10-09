@@ -123,10 +123,10 @@ class MandrillTemplateManager < Thor
       template = MandrillTemplate::Local.new(slug)
       if template.avail
         kit = IMGKit.new(template['code'], :quality => 60, width: 600)
+        png_file = REPORT_DIR + "/#{slug}.png"
         file = File.open(png_file, 'w')
         file.flush
         file.close
-        png_file = REPORT_DIR + "/#{slug}.png"
         img = kit.to_file(png_file)
         puts "Image written '#{img.size}'."
         puts "Preview for template '#{slug}' generated."
