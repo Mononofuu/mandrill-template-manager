@@ -122,13 +122,13 @@ class MandrillTemplateManager < Thor
     labels.each do |slug|
       template = MandrillTemplate::Local.new(slug)
       if template.avail
-        kit = IMGKit.new(template['code'], :quality => 60, width: 600)
-        png_file = REPORT_DIR + "/#{slug}.png"
-        file = File.open(png_file, 'w')
-        file.flush
-        file.close
-        img = kit.to_file(png_file)
+        
+        file = Tempfile.new([REPORT_DIR + "/#{slug}", '.png'], 'tmp', :encoding => 'ascii-8bit')
+        file.write(IMGKit.new(template['code'], :quality => 60, width: 600).to_png)
         puts "Image written '#{img.size}'."
+        file.flush
+        file.unlink
+        
         puts "Preview for template '#{slug}' generated."
       else
         puts "Template data not found for '#{slug}'."
