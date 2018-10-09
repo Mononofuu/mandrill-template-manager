@@ -126,7 +126,7 @@ class MandrillTemplateManager < Thor
         png_file = REPORT_DIR + "/#{slug}.png"
         img = kit.to_file(png_file)
         
-        file = File.open(png_file, 'wb')
+        file = File.open(png_file, 'w')
         file.write(img)
         file.flush
         puts "Image written '#{file.size}'."
