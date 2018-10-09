@@ -123,7 +123,7 @@ class MandrillTemplateManager < Thor
       template = MandrillTemplate::Local.new(slug)
       if template.avail
         
-        file = File.new([REPORT_DIR + "/#{slug}", '.png'], :encoding => 'ascii-8bit')
+        file = File.new([REPORT_DIR + "/#{slug}.png", :encoding => 'ascii-8bit')
         file.write(IMGKit.new(template['code'], :quality => 60, width: 600).to_png)
         puts "Image written '#{img.size}'."
         file.flush
