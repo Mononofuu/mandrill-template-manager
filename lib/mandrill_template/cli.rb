@@ -122,11 +122,10 @@ class MandrillTemplateManager < Thor
     labels.each do |slug|
       template = MandrillTemplate::Local.new(slug)
       if template.avail
-        
+        png_file = REPORT_DIR + "/#{slug}.png"
         file = File.open(png_file, 'wb')
         file.close
         kit = IMGKit.new(template['code'], :quality => 60, width: 600)
-        png_file = REPORT_DIR + "/#{slug}.png"
         img = kit.to_file(png_file)
         puts "Image written '#{img.size}'."
         
